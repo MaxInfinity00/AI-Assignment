@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Udit_Shroff
+namespace Firstname_Lastname
 {
-    public class Team_Udit_Shroff : Team
+    public class Team_Firstname_Lastname : Team
     {
         [SerializeField]
         private Color   m_myFancyColor;
