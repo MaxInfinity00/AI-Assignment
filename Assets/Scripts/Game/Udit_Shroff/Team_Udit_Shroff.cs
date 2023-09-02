@@ -1,7 +1,9 @@
+using System;
 using Game;
 using Graphs;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Udit_Shroff
@@ -11,8 +13,42 @@ namespace Udit_Shroff
         [SerializeField]
         private Color   m_myFancyColor;
 
-        #region Properties
+        public Battlefield.Node TeamTarget;
 
+        #region Properties
+        public Unit ClosestEnemy
+        {
+            get
+            {
+                Vector3 avgTeamPosition = AverageTeamPosition;
+                float fBestDistance = float.MaxValue;
+                Unit closestEnemy = null;
+                foreach (Unit enemy in EnemyTeam.Units)
+                {
+                    float fDistance = Vector3.Distance(enemy.transform.position, transform.position);
+                    if (fDistance < fBestDistance)
+                    {
+                        fBestDistance = fDistance;
+                        closestEnemy = enemy; 
+                    }
+                }
+
+                return closestEnemy;
+            }
+        }
+
+        private Vector3 AverageTeamPosition
+        {
+            get
+            {
+                Vector3 position = Vector3.zero;
+                foreach (Unit unit in Units)
+                {
+                    position += unit.transform.position;
+                }
+                return position/Units.Count();
+            }
+        }
         public override Color Color => m_myFancyColor;
 
         #endregion
@@ -77,7 +113,7 @@ namespace Udit_Shroff
                         if (link.Target is Battlefield.Node target)
                         {
                             if (!closed.Contains(target) &&
-                                target.Unit == null)
+                                !Units.Contains(target.Unit))
                             {
                                 float newDistance = current.m_fDistance + Vector3.Distance(current.WorldPosition, target.WorldPosition) + target.AdditionalCost;
                                 
@@ -109,6 +145,29 @@ namespace Udit_Shroff
 
             // no path found :(
             return null;
+        }
+        protected override void Start()
+        {
+            base.Start();
+            StartCoroutine(GangTarget());
+        }
+
+        IEnumerator GangTarget()
+        {
+            
+            while (true)
+            {
+                Unit enemy = ClosestEnemy;
+                if (enemy != null)
+                {
+                    TeamTarget = enemy.CurrentNode;
+                    // foreach (Unit unit in Units)
+                    // {
+                    //     unit.TargetNode = ClosestEnemy.CurrentNode;
+                    // }
+                }
+                yield return new WaitForSeconds(0.1F);
+            }
         }
     }
 }

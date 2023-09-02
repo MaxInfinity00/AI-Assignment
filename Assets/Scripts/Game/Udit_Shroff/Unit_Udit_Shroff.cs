@@ -21,23 +21,20 @@ namespace Udit_Shroff
         
         protected override Unit SelectTarget(List<Unit> enemiesInRange)
         {
-            Debug.Log("setting fire target");
             return ClosestEnemy;
         }
         
         protected override void Start()
         {
             base.Start();
-            StartCoroutine(SmartLogic());
+            StartCoroutine(GetTarget());
         }
-
-        IEnumerator SmartLogic()
+        
+        IEnumerator GetTarget()
         {
             while (true)
             {
-                Unit enemy = ClosestEnemy;
-                if(enemy!=null)
-                    TargetNode = ClosestEnemy.CurrentNode;
+                TargetNode = Team.TeamTarget;
                 yield return new WaitForSeconds(1);
             }
         }

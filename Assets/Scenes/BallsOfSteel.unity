@@ -248,8 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e89975e31d2e924181610094cac3bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_team1: {fileID: 1962103230482467457, guid: 1f32659cfeaebfe4193880c627701f29, type: 3}
-  m_team2: {fileID: 1962103230482467457, guid: 1f32659cfeaebfe4193880c627701f29, type: 3}
+  m_team1: {fileID: 1962103230482467457, guid: 5d837bd93ad346f448b77d26879a227a, type: 3}
+  m_team2: {fileID: 1962103230482467457, guid: 17baf12ac9e1d5d43a2809e1bab716a1, type: 3}
 --- !u!1 &563145785
 GameObject:
   m_ObjectHideFlags: 0
